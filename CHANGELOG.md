@@ -18,6 +18,12 @@ the absence of demonstrated framework variance
 nor membership in the undetermined middle
 establishes foundational permissibility.
 
+Fixes (after football): Paper 110's metadata still identifies Paper 100.
+Its README title, overview, arXiv badge, DOI, and main contribution are copied from Neutral Substrates.
+CITATION.cff also identifies the Paper 100 title and DOI,
+while SE_MANIFEST.toml still describes Paper 100's neutrality result.
+The changelog even instructs replacing arXiv submission 2601.14271.
+
 ---
 
 ## [0.1.0] - 2026-10-25
