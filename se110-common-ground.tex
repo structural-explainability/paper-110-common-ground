@@ -1,0 +1,851 @@
+\PassOptionsToPackage{colorlinks=true,allcolors=black}{hyperref}
+% REQ: The above line, \PassOptionsToPackage{} must be very first line.
+
+\documentclass[11pt]{article}
+
+% Encoding and font setup for cross-platform reproducibility
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+% Improve readability for dense theoretical material
+\usepackage{setspace}
+\onehalfspacing
+
+% Mathematical notation and table formatting for formal semantics
+\usepackage{amsmath, amssymb}
+\usepackage{array}
+\usepackage[table]{xcolor}
+\usepackage{colortbl}
+\usepackage{booktabs}
+\usepackage{graphicx}
+
+% Theorem environments
+\usepackage{amsthm}
+
+% =============================================================================
+% Numbering convention:
+% - All theorem-like statements share one counter, numbered by section.
+% - Prose cites statements by stable names and labels, not by number.
+% - External documents cite by stable tag (e.g., se110.def.Substrate).
+%   Numbers move when text is edited; names do not.
+% =============================================================================
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{constraint}[theorem]{Constraint}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{assumption}[theorem]{Assumption}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{note}[theorem]{Note}
+
+% Unnumbered versions for front-matter previews/callouts
+\newtheorem*{constraint*}{Constraint}
+\newtheorem*{definition*}{Definition}
+\newtheorem*{example*}{Example}
+\newtheorem*{remark*}{Remark}
+\newtheorem*{note*}{Note}
+
+% Bibliography management and hyperlink support
+\usepackage{url}
+\usepackage{natbib}
+\bibpunct{(}{)}{;}{a}{}{ }
+
+% Core hyperlink and bookmark infrastructure
+\usepackage{hyperref}
+\usepackage{bookmark}
+
+% Support multiple author affiliations
+\usepackage{authblk}
+
+% Improve typographic quality and line breaking
+\usepackage{microtype}
+
+% Callout boxes for examples and emphasis
+\usepackage[most]{tcolorbox}
+
+% Compact list formatting for dense conceptual content
+\usepackage{enumitem}
+\setlist[itemize]{itemsep=0.2em, topsep=0.2em, parsep=0em, partopsep=0em}
+\setlist[enumerate]{itemsep=0.2em, topsep=0.2em, parsep=0em, partopsep=0em}
+
+% Paragraph spacing prioritizes readability over traditional indentation
+\setlength{\parskip}{0.75em}
+\setlength{\parindent}{0em}
+
+% Keywords macro for structured abstract metadata
+\providecommand{\keywords}[1]{\vspace{0.5em}\noindent\textbf{Keywords: }\small #1}
+
+% =============================================================================
+% Stable named-reference helpers.
+% Use labels such as se110.def.Substrate and cite by stable name:
+% \DefRef{se110.def.Substrate}{Substrate}
+% =============================================================================
+\newcommand{\DefRef}[2]{\hyperref[#1]{Definition (#2)}}
+\newcommand{\AssumpRef}[2]{\hyperref[#1]{Assumption (#2)}}
+\newcommand{\ConstRef}[2]{\hyperref[#1]{Constraint (#2)}}
+\newcommand{\ExRef}[2]{\hyperref[#1]{Example (#2)}}
+\newcommand{\RemRef}[2]{\hyperref[#1]{Remark (#2)}}
+\newcommand{\NoteRef}[2]{\hyperref[#1]{Note (#2)}}
+\newcommand{\PropRef}[2]{\hyperref[#1]{Proposition (#2)}}
+\newcommand{\SecRef}[1]{Section~\ref{#1}}
+
+% =============================================================================
+% Formal notation
+% =============================================================================
+\newcommand{\Substrate}{\mathcal{S}}
+\newcommand{\SubstrateRef}{\mathcal{S}_{\mathrm{ref}}}
+\newcommand{\Frameworks}{\mathbb{F}}
+\newcommand{\Framework}{F}
+\newcommand{\FrameworkOne}{F_1}
+\newcommand{\FrameworkTwo}{F_2}
+\newcommand{\entails}{\vdash}
+\newcommand{\notentails}{\nvdash}
+\newcommand{\Asserts}{\mathsf{Asserts}}
+\newcommand{\pred}[1]{\mathit{#1}}
+
+% Reusable callout box
+\newcommand{\FigureCallout}[2]{%
+  \begin{tcolorbox}[
+    colback=gray!5,
+    colframe=black!40,
+    title={#1},
+    fonttitle=\bfseries,
+    arc=3pt,
+    boxrule=0.5pt,
+    width=\linewidth,
+    enhanced,
+    breakable
+  ]
+  #2
+  \end{tcolorbox}
+}
+
+% =============================================================================
+% PREFERRED CITATION SPECIFICATION
+%
+% @techreport{case2026common,
+%   author      = {Case, Denise M.},
+%   title       = {Referential Common Ground: Conditions for Compatibility Between a Bounded Referential Fragment and Interpretive Frameworks},
+%   institution = {Preprint},
+%   year        = {2026},
+%   doi         = {10.48550/arXiv.2601.14271},
+%   url         = {https://doi.org/10.48550/arXiv.2601.14271}
+% }
+% =============================================================================
+
+% ============================================================
+\title{
+Referential Common Ground:\\
+Conditions for Compatibility Between a Bounded Referential Fragment\\
+and Interpretive Frameworks
+}
+% ============================================================
+
+\author{Denise M. Case}
+\affil{\small Department of Computer Science and Information Systems\\
+Northwest Missouri State University, Maryville, MO, USA\\}
+\date{}
+
+\begin{document}
+\maketitle
+\vspace{-2em}
+
+\begin{abstract}
+  Shared records must often serve parties who interpret them differently.
+  The neutral-substrate result shows that a foundational layer limited to
+  referential commitments and permitted attributions is neutral relative to
+  every admissible framework, provided the referential commitments are jointly
+  consistent with each admissible framework.
+  That proviso, Referential Common Ground, was left as an assumption for each
+  realization to justify.
+
+  This paper asks what can be proved about it.
+  Admissibility alone does not supply it: when the admissibility conditions
+  beyond consistency place no restriction on a framework's content, a
+  commitment set is compatible with every admissible framework exactly when
+  every valuation satisfies it, so no nontrivial referential fragment
+  qualifies.
+  The needed condition must therefore constrain frameworks.
+  We state it without reference to any fragment's commitments: a framework is
+  neutral on a vocabulary when it permits every valuation of that vocabulary.
+  A framework is neutral on a vocabulary exactly when it is jointly satisfiable
+  with every satisfiable theory over it; every framework is either neutral or
+  conflicts with some satisfiable theory over the vocabulary; and a satisfiable
+  framework written entirely outside the vocabulary is neutral.
+
+  The results are proved for classical propositional logic and checked in
+  Lean 4.
+  They are relative to a stated fragment and framework class.
+  They do not establish common ground for the full class of admissible
+  frameworks, and they do not justify that a fragment's commitments are
+  referential.
+\end{abstract}
+
+
+\keywords{
+  Formal ontology;
+  neutral substrates;
+  referential common ground;
+  interpretive frameworks;
+  framework admissibility;
+  joint consistency;
+  persistent interpretive disagreement
+}
+
+\begin{note*}[Citation Convention]
+  Definitions, assumptions, constraints, and examples in this paper carry stable
+  names (for example, \texttt{se110.def.NeutralOn}).
+  This paper cites statements by stable name rather than by number,
+  so citations remain valid even if numbering changes.
+\end{note*}
+
+% =============================================================================
+% Preview of Main Result
+% =============================================================================
+
+\bigskip
+\noindent\textbf{Preview of Main Result.}
+\emph{
+  Let $V$ be the vocabulary of a satisfiable referential fragment.
+  A framework is neutral on $V$ if it permits every valuation of $V$.
+  A framework is neutral on $V$ exactly when it is jointly satisfiable with
+  every satisfiable theory over $V$, so a neutral framework is compatible with
+  the fragment whatever its content.
+  Admissibility alone does not give this: when it imposes no restriction beyond
+  consistency, only valid commitment sets are compatible with every admissible
+  framework.
+}
+
+\medskip
+\noindent
+\emph{Informally.} A framework that says nothing about what a record is about
+cannot contradict what the record is about.
+A framework that does say something can.
+Common ground for a fragment therefore holds for the frameworks that stay
+silent on the fragment's vocabulary.
+For the others it is a question about the framework's content.
+
+% =============================================================================
+\section{Introduction}
+\label{sec:introduction}
+% =============================================================================
+
+
+The purpose of this paper is to determine what can be proved about Referential
+Common Ground, the assumption on which the neutral-substrate result
+\citep{case2026neutral} rests.
+
+The central claim is:
+
+\begin{quote}
+  Referential Common Ground cannot be derived from admissibility alone.
+  For a bounded referential fragment it can be established relative to a class
+  of frameworks characterized by what they permit on the fragment's
+  vocabulary, without reference to the fragment's commitments.
+  A framework in that class is compatible with every satisfiable theory over
+  the vocabulary, and every other framework conflicts with some such theory.
+\end{quote}
+
+The mechanism is the \emph{interface} of a framework on a vocabulary: the set of
+valuations of the vocabulary that the framework permits.
+Compatibility of a theory over the vocabulary with the framework depends only
+on that interface.
+A framework that permits every valuation cannot contradict any satisfiable
+theory over the vocabulary.
+
+The paper proceeds as follows.
+\SecRef{sec:related-work} credits the foundations and states the contribution.
+\SecRef{sec:problem-setting} states the problem.
+\SecRef{sec:fragments} defines fragments.
+\SecRef{sec:independence} shows that admissibility alone does not give common ground.
+\SecRef{sec:interface} defines the interface a framework permits and the scope condition.
+\SecRef{sec:characterization} characterizes the scope condition and proves the dichotomy.
+\SecRef{sec:example} gives a worked example.
+\SecRef{sec:limits} states the limits of this work.
+\SecRef{sec:discussion} discusses the practical significance and limits of the work.
+\SecRef{sec:conclusion} concludes.
+
+% =============================================================================
+\section{Related Work and Contribution}
+\label{sec:related-work}
+% =============================================================================
+
+The neutral-substrate result \citep{case2026neutral} restricts a shared
+foundational layer to referential commitments and permitted attributions, and
+shows that this restriction yields neutrality relative to every admissible
+framework under Referential Common Ground.
+Its representational background (reification, provenance, context logic,
+argumentation, standpoint logic) is given there and is not repeated.
+This paper takes Referential Common Ground itself as its subject.
+
+The logical facts used here are classical.
+Joint consistency of satisfiable propositional theories that share no atom is
+the simplest instance of the phenomenon behind Robinson's joint consistency
+theorem \citep{robinson1956}, which is closely related to Craig interpolation
+\citep{craig1957}.
+In first-order logic with equality the disjoint-vocabulary case fails in
+general, because a theory can constrain the size of the domain.
+This is why the paper works propositionally.
+
+The scope condition is close in spirit to conservative extensions as used in
+ontology modularity \citep{cuencagrau2008modular}.
+Remark~\ref{rem:conservative} states the connection.
+The purpose differs: here the condition characterizes frameworks that cannot
+contradict a referential fragment, in a setting where frameworks are admitted by
+documented provenance and not by logical form.
+
+\textbf{The contribution.}
+Each ingredient is known.
+The contribution is the formulation.
+It gives a condition on frameworks that is stated independently of the
+fragment, proves that this condition is exactly what is needed uniformly over
+fragments on a vocabulary, and proves that admissibility alone cannot supply
+any such guarantee.
+
+
+% =============================================================================
+\section{Problem Setting}
+\label{sec:problem-setting}
+% =============================================================================
+
+This paper builds on the neutral-substrate result \citep{case2026neutral}.
+That result uses the following notions, restated here only as far as needed.
+A \emph{commitment theory} is a set of object-language propositions.
+A consequence relation $\entails$ relates theories to propositions.
+It has three structural properties: every member of a theory is entailed by it,
+generalized cut, and a proposition together with its negation entails the
+contradiction $\bot$.
+A theory is \emph{consistent} when it does not entail $\bot$.
+A \emph{framework} $\Framework$ is an interpretive position with a commitment
+theory, and we write $\Framework$ also for that theory.
+A framework is \emph{admissible} when its theory is consistent, it is
+evidentially grounded, and it has a documented interpretive function.
+A commitment set $T$ is \emph{framework-compatible} when
+$T \cup \Framework \notentails \bot$ for every admissible framework
+$\Framework$.
+\emph{Referential Common Ground} is the assumption that the referential
+commitments $\SubstrateRef$ of a substrate are framework-compatible.
+
+The neutral-substrate result leaves Referential Common Ground as an assumption
+that a realization must justify.
+Three ways of dispensing with it are unavailable.
+It cannot be derived from admissibility, as \SecRef{sec:independence} shows.
+It cannot be secured by building agreement with $\SubstrateRef$ into the
+definition of admissibility, because the result would then hold by definition
+and say nothing about frameworks.
+It cannot be asserted for the full class of admissible frameworks without an
+argument about every framework that could be admitted.
+
+What can be done is narrower.
+A legitimate result must satisfy five requirements.
+\begin{enumerate}
+  \item It is relative to a stated fragment and a stated class of frameworks,
+        and does not claim the full class.
+  \item The fragment is nontrivial: a fragment that rules nothing out is
+        compatible with every satisfiable framework, and a result about it
+        says nothing.
+  \item The class of frameworks is characterized without reference to the
+        fragment's commitments.
+  \item A constructive compatibility theorem and a countermodel showing why a
+        proposed condition is inadequate are both acceptable outcomes.
+  \item That the fragment's commitments are genuinely referential is a premise
+        supplied from outside this paper.
+\end{enumerate}
+
+
+
+% =============================================================================
+\section{Fragments}
+\label{sec:fragments}
+% =============================================================================
+
+All results are stated for classical propositional logic, the concrete
+instance of the consequence relation of \SecRef{sec:problem-setting} in which
+the formal development is carried out.
+
+Let $\mathsf{At}$ be a set of atoms.
+Formulas are built from atoms, the contradiction $\bot$, negation, and
+conjunction.
+A \emph{valuation} $v$ assigns truth or falsity to each atom and extends to all
+formulas in the usual way.
+A valuation \emph{satisfies} a theory $T$, written $v \models T$, when it makes
+every member of $T$ true.
+A theory is \emph{satisfiable} when some valuation satisfies it.
+A theory \emph{semantically entails} a formula when every valuation that
+satisfies the theory makes the formula true.
+This relation has the three structural properties required of $\entails$, and a
+theory is consistent exactly when it is satisfiable.
+Satisfiability therefore stands in for consistency throughout.
+
+A \emph{vocabulary} is a set $V \subseteq \mathsf{At}$.
+A formula \emph{lies in} $V$ when every atom occurring in it belongs to $V$,
+and a theory lies in $V$ when all of its members do.
+
+\begin{lemma}[Agreement]
+  If two valuations agree on every atom of $V$, they satisfy the same theories
+  that lie in $V$.
+\end{lemma}
+
+\begin{proof}
+  By induction on formulas, a formula lying in $V$ is true under a valuation
+  exactly when it is true under any valuation that agrees with it on $V$.
+\end{proof}
+
+\begin{proposition}[Joint Consistency over Disjoint Vocabularies]
+  \label{se110.proposition.SatisfiableUnionOfDisjoint}
+  Let $T$ lie in $V$ and $U$ lie in $W$, where $V$ and $W$ have no atom in
+  common.
+  If $T$ and $U$ are each satisfiable, then $T \cup U$ is satisfiable.
+\end{proposition}
+
+\begin{proof}
+  Let $v_1 \models T$ and $v_2 \models U$.
+  Let $v$ agree with $v_1$ on $V$ and with $v_2$ outside $V$.
+  By agreement $v \models T$.
+  Since $W$ is disjoint from $V$, $v$ agrees with $v_2$ on $W$, so
+  $v \models U$.
+\end{proof}
+
+\begin{definition}[Referential Fragment]
+  \label{se110.def.ReferentialFragment}
+  A \emph{referential fragment} is a vocabulary $V$ together with a theory $R$
+  lying in $V$ such that
+  \begin{enumerate}
+    \item $R$ is satisfiable;
+    \item $R$ is nontrivial: some valuation does not satisfy $R$; and
+    \item $V$ is bounded: it is contained in a finite set of atoms.
+  \end{enumerate}
+\end{definition}
+
+Condition~1 keeps the fragment consistent.
+Condition~2 excludes the fragments for which the question is vacuous
+(\PropRef{se110.proposition.CompatibleBareIffValid}{Bare Compatibility}).
+Condition~3 records that the fragments of interest are small.
+No result below uses it.
+
+The definition fixes the logical shape of a fragment.
+It does not say that the commitments of $R$ are referential.
+That they are fixed by a referential regime, and that the regime is justified
+for the intended referents, is a premise supplied by the realization, as in
+\citet{case2026neutral}.
+
+% =============================================================================
+\section{Independence}
+\label{sec:independence}
+% =============================================================================
+
+To see what admissibility contributes on its own, consider the setting in which
+the evidential-grounding and documentation conditions hold for every framework.
+A framework is then admissible exactly when its theory is consistent, that is,
+satisfiable.
+We call this the \emph{bare setting}.
+It is the setting in which admissibility imposes no restriction on a
+framework's content beyond consistency: the grounding and documentation
+conditions concern provenance and presentation, not content.
+
+\begin{proposition}[Bare Compatibility]
+  \label{se110.proposition.CompatibleBareIffValid}
+  In the bare setting, a commitment set $T$ is framework-compatible if and only
+  if every valuation satisfies $T$.
+  Consequently no referential fragment is framework-compatible.
+\end{proposition}
+
+\begin{proof}
+  Suppose every valuation satisfies $T$, and let $\Framework$ be admissible.
+  Any valuation satisfying $\Framework$ satisfies $T \cup \Framework$, so the
+  union is satisfiable.
+
+  Conversely, suppose some valuation $v$ does not satisfy $T$.
+  Then some $\varphi \in T$ is false under $v$.
+  The theory $\{\neg\varphi\}$ is satisfied by $v$, so it is admissible in the
+  bare setting.
+  Any valuation satisfying $T$ makes $\varphi$ true, so none satisfies
+  $T \cup \{\neg\varphi\}$.
+  Thus $T$ is not framework-compatible.
+
+  A referential fragment is nontrivial, so its commitments are not satisfied
+  by every valuation.
+\end{proof}
+
+The proof is also the countermodel promised in \SecRef{sec:problem-setting}.
+For any commitment of a nontrivial fragment, the single-member theory that
+denies it is satisfiable and therefore admissible in the bare setting, and it
+conflicts with the fragment.
+This does not contradict the neutral-substrate result, where Referential Common
+Ground is an assumption.
+It shows that the assumption cannot be replaced by a consequence of
+admissibility.
+
+
+% =============================================================================
+\section{Interface and Scope}
+\label{sec:interface}
+% =============================================================================
+
+Fix a vocabulary $V$.
+
+\begin{definition}[Interface Permission]
+  \label{se110.def.Permits}
+  A framework $\Framework$ \emph{permits} a valuation $u$ on $V$ when some
+  valuation satisfying $\Framework$ agrees with $u$ on every atom of $V$.
+\end{definition}
+
+The valuations of $V$ that $\Framework$ permits form its \emph{interface} on
+$V$.
+The next result shows that compatibility with a theory over $V$ depends only on
+the interface.
+
+\begin{proposition}[Compatibility Reduces to the Interface]
+  \label{se110.proposition.SatisfiableUnionIffPermits}
+  Let $R$ lie in $V$.
+  Then $R \cup \Framework$ is satisfiable if and only if $\Framework$ permits
+  some valuation that satisfies $R$.
+\end{proposition}
+
+\begin{proof}
+  If $w$ satisfies $R \cup \Framework$, then $w$ satisfies $R$, and
+  $\Framework$ permits $w$ because $w$ satisfies $\Framework$ and agrees with
+  itself.
+  Conversely, let $u \models R$ and let $w \models \Framework$ agree with $u$ on
+  $V$.
+  Since $R$ lies in $V$, agreement gives $w \models R$.
+  Hence $w \models R \cup \Framework$.
+\end{proof}
+
+\begin{definition}[Neutral on a Vocabulary]
+  \label{se110.def.NeutralOn}
+  A framework $\Framework$ is \emph{neutral on} $V$ when it permits every
+  valuation of $V$.
+\end{definition}
+
+The condition mentions only $V$ and $\Framework$.
+It does not mention any fragment's commitments.
+A neutral framework is satisfiable.
+
+\begin{definition}[Avoiding a Vocabulary]
+  \label{se110.def.AvoidsVocabulary}
+  A framework $\Framework$ \emph{avoids} $V$ when it lies in some vocabulary
+  $W$ with no atom in common with $V$.
+\end{definition}
+
+\begin{proposition}[Avoidance Gives Neutrality]
+  \label{se110.proposition.NeutralOnOfAvoids}
+  A satisfiable framework that avoids $V$ is neutral on $V$.
+\end{proposition}
+
+\begin{proof}
+  Let $\Framework$ lie in $W$, disjoint from $V$, and let $w_2 \models
+  \Framework$.
+  Given a valuation $u$ of $V$, let $w$ agree with $u$ on $V$ and with $w_2$
+  outside $V$.
+  Since $W$ is disjoint from $V$, $w$ agrees with $w_2$ on $W$, so
+  $w \models \Framework$ by agreement.
+  Thus $\Framework$ permits $u$.
+\end{proof}
+
+Avoidance can be checked by reading the framework's vocabulary.
+Neutrality is semantic and weaker: a framework may mention atoms of $V$
+vacuously, for example through $p \vee \neg p$, and still be neutral.
+
+% =============================================================================
+\section{Characterization and Dichotomy}
+\label{sec:characterization}
+% =============================================================================
+
+\begin{proposition}[Neutrality Characterization]
+  \label{se110.proposition.NeutralOnIffCompatible}
+  A framework $\Framework$ is neutral on $V$ if and only if $R \cup \Framework$
+  is satisfiable for every satisfiable theory $R$ lying in $V$.
+\end{proposition}
+
+\begin{proof}
+  Suppose $\Framework$ is neutral on $V$ and $R \models$-satisfiable by some
+  $u$.
+  Since $\Framework$ permits $u$,
+  \PropRef{se110.proposition.SatisfiableUnionIffPermits}{Compatibility Reduces
+    to the Interface} gives that $R \cup \Framework$ is satisfiable.
+
+  Conversely, suppose $\Framework$ is compatible with every satisfiable theory
+  lying in $V$, and let $u$ be a valuation of $V$.
+  Let $D_u$ contain $p$ for each atom $p \in V$ that $u$ makes true and
+  $\neg p$ for each atom $p \in V$ that $u$ makes false.
+  Then $D_u$ lies in $V$ and is satisfied by $u$.
+  By assumption some $w$ satisfies $D_u \cup \Framework$.
+  Then $w \models \Framework$, and $w$ agrees with $u$ on $V$ because it
+  satisfies $D_u$.
+  So $\Framework$ permits $u$.
+\end{proof}
+
+\begin{proposition}[Scope Dichotomy]
+  \label{se110.proposition.Dichotomy}
+  For every framework $\Framework$ and vocabulary $V$, either $\Framework$ is
+  neutral on $V$, or some satisfiable theory $R$ lying in $V$ is such that
+  $R \cup \Framework$ is not satisfiable.
+\end{proposition}
+
+\begin{proof}
+  Classically, either $\Framework$ is neutral on $V$ or it is not.
+  If it is not, \PropRef{se110.proposition.NeutralOnIffCompatible}{Neutrality
+    Characterization} yields a satisfiable theory lying in $V$ that is not
+  jointly satisfiable with $\Framework$.
+\end{proof}
+
+The second case of the dichotomy supplies a witness: a concrete satisfiable
+theory over $V$ that the framework cannot coexist with.
+Whether that theory is the commitment set of a given fragment is a question
+about the fragment.
+For a fixed fragment, weaker conditions than neutrality can suffice, as
+\PropRef{se110.proposition.SatisfiableUnionIffPermits}{Compatibility Reduces
+  to the Interface} shows.
+Neutrality is the weakest condition on a framework alone that gives
+compatibility with every fragment on $V$.
+
+\begin{definition}[Fragment-Relative Common Ground]
+  \label{se110.def.FragmentCommonGround}
+  Let $(V,R)$ be a referential fragment and $\mathcal{K}$ a class of frameworks.
+  The fragment has \emph{common ground relative to} $\mathcal{K}$ when
+  $R \cup \Framework$ is satisfiable for every $\Framework \in \mathcal{K}$.
+\end{definition}
+
+This is not Referential Common Ground as used in the neutral-substrate result.
+When $\mathcal{K}$ is the class of all admissible frameworks and $R$ is the
+substrate's referential commitments, it agrees with the first condition of that
+assumption.
+This paper establishes it only for classes of neutral frameworks.
+
+\begin{proposition}[Common Ground from Neutrality]
+  \label{se110.proposition.FragmentCommonGroundOfNeutral}
+  Let $(V,R)$ be a referential fragment.
+  If every framework in $\mathcal{K}$ is neutral on $V$, then the fragment has
+  common ground relative to $\mathcal{K}$.
+\end{proposition}
+
+\begin{proof}
+  $R$ is satisfiable and lies in $V$.
+  Apply \PropRef{se110.proposition.NeutralOnIffCompatible}{Neutrality
+    Characterization} to each $\Framework \in \mathcal{K}$.
+\end{proof}
+
+\begin{remark}[Relation to Conservative Extensions]
+  \label{rem:conservative}
+  A framework $\Framework$ is neutral on $V$ exactly when every formula lying
+  in $V$ that $\Framework$ entails is valid.
+  The forward direction is immediate.
+  The converse uses compactness of propositional logic: if $\Framework$ forbids
+  $u$, some finite part of $D_u$ already conflicts with $\Framework$, so
+  $\Framework$ entails the negation of that finite conjunction, a formula
+  lying in $V$ that $u$ falsifies.
+  In the terminology of ontology modularity \citep{cuencagrau2008modular}, this
+  says that $\Framework$ is a conservative extension of the empty theory with
+  respect to $V$.
+  This remark is not part of the formalization.
+\end{remark}
+
+% =============================================================================
+\section{Worked Example}
+\label{sec:example}
+% =============================================================================
+
+\begin{example}[Decision Record]
+  \label{se110.example.DecisionRecord}
+  Consider a decision record with four atoms:
+  $\pred{decisionMade}$ (a decision was made),
+  $\pred{occurredAt}$ (it occurred at the recorded time),
+  $\pred{causedByScore}$ (the denial was caused by the score), and
+  $\pred{justifiedByPolicy}$ (the cited policy justified the decision).
+  Let $V = \{\pred{decisionMade}, \pred{occurredAt}\}$ and
+  $R = \{\pred{decisionMade}, \pred{occurredAt}\}$.
+  The theory $R$ is satisfied by the valuation that makes every atom true, and
+  not satisfied by the valuation that makes every atom false.
+  So $(V,R)$ is a referential fragment.
+\end{example}
+
+The example is conditional: it presupposes a realization that justifies
+$\pred{decisionMade}$ and $\pred{occurredAt}$ as referential commitments.
+The atoms do not by themselves establish that.
+
+\textbf{A neutral framework.}
+Let $\Framework_1 = \{\pred{causedByScore}\}$, a causal claim.
+It lies in $\{\pred{causedByScore}, \pred{justifiedByPolicy}\}$, which is
+disjoint from $V$, and it is satisfiable.
+By \PropRef{se110.proposition.NeutralOnOfAvoids}{Avoidance Gives Neutrality}
+it is neutral on $V$.
+By \PropRef{se110.proposition.NeutralOnIffCompatible}{Neutrality
+  Characterization}, $R \cup \Framework_1$ is satisfiable.
+The fragment has common ground relative to any class of frameworks of this kind.
+
+\textbf{A conflicting framework.}
+Let $\Framework_2 = \{\neg\pred{occurredAt}\}$, a framework that disputes the
+recorded time.
+It is satisfied by the valuation that makes every atom false, so it is
+admissible in the bare setting.
+Every valuation satisfying $R$ makes $\pred{occurredAt}$ true, so no valuation
+satisfies $R \cup \Framework_2$.
+By the dichotomy, $\Framework_2$ is not neutral on $V$, and $R$ itself is the
+witness.
+By \PropRef{se110.proposition.CompatibleBareIffValid}{Bare Compatibility}, the
+fragment is not framework-compatible in the bare setting, and $\Framework_2$
+is the framework that shows it.
+
+\textbf{Reading.}
+The conflict is not resolved by choosing a side.
+In the neutral-substrate construction, $\Framework_2$'s dispute with the
+recorded time belongs in the record as an attributed assertion.
+The commitment to the recorded time is then not common ground for
+$\Framework_2$, and a class of frameworks for which it is common ground must
+exclude $\Framework_2$.
+
+
+% =============================================================================
+\section{Limits}
+\label{sec:limits}
+% =============================================================================
+
+\textbf{This paper does not establish Referential Common Ground for the full
+  class of admissible frameworks.}
+Its results are relative to a stated fragment and a stated class of
+frameworks.
+
+\textbf{This paper does not justify referential fixing.}
+That the commitments of a fragment are genuinely referential is a premise of the
+realization.
+Nothing here derives it.
+
+\textbf{This paper does not show that realistic frameworks are neutral.}
+It states the condition a class of frameworks must meet and proves what the
+condition delivers.
+Whether a deployed class meets it is a question about that class.
+
+\textbf{This paper does not treat identity-bearing fragments.}
+Fragments whose commitments assert identity, co-reference, or persistence are
+out of scope.
+In first-order logic with equality, theories over disjoint vocabularies can
+conflict through the size of the domain, so the disjointness argument does not
+extend.
+
+\textbf{This paper does not provide a general compatibility algorithm.}
+Avoidance is checked by reading the framework's vocabulary.
+Neutrality is a semantic condition and is not claimed to be decidable in
+general.
+
+\textbf{This paper does not claim more than classical propositional logic.}
+Results that depend on classical features hold for that logic, not for every
+consequence relation with the three structural properties.
+
+% =============================================================================
+\section{Discussion}
+\label{sec:discussion}
+% =============================================================================
+
+Referential Common Ground, as used in the neutral-substrate result, quantifies
+over the whole class of admissible frameworks, including frameworks not known
+when the substrate is designed.
+The results here do not weaken that quantifier.
+They show that, for a fragment, the quantifier can be discharged for exactly
+the frameworks that are neutral on the fragment's vocabulary, and that no weaker
+condition on a framework alone works uniformly over fragments on that
+vocabulary.
+
+The practical reading has three parts.
+First, avoidance can be checked by reading a framework's vocabulary against the
+fragment's.
+A framework that avoids the fragment's vocabulary and is satisfiable is neutral.
+Second, a framework that does use the fragment's vocabulary is a boundary case,
+not an excluded one.
+Whether it is compatible is a question about its content.
+If it disputes a fragment commitment, the dispute belongs in the record as an
+attributed assertion, and that commitment is not common ground for the
+framework.
+Third, a deployment could require neutrality on the fragment's vocabulary as a
+condition of admission.
+That is a design choice and not a consequence of the results.
+It would make the admissibility gate depend on the fragment, and the
+neutral-substrate result already observes that the gate is not neutral.
+
+The propositional setting is a limitation as well as a convenience.
+It gives clean proofs and excludes the identity-bearing fragments for which the
+question matters most.
+Extending the analysis to those fragments needs identity criteria and is
+outside this paper.
+
+
+% =============================================================================
+\section{Conclusion}
+\label{sec:conclusion}
+% =============================================================================
+
+Referential Common Ground cannot be obtained from admissibility alone: when
+admissibility imposes no restriction on content beyond consistency, only valid
+commitment sets are framework-compatible, and no nontrivial referential
+fragment qualifies.
+
+The condition that does the work constrains frameworks.
+A framework is neutral on a vocabulary when it permits every valuation of that
+vocabulary, a condition stated without reference to any fragment's commitments.
+Neutral frameworks are exactly those compatible with every satisfiable theory
+over the vocabulary.
+Every other framework conflicts with some such theory.
+
+The result is conditional and small.
+It is relative to a stated fragment and framework class, it makes no claim about
+the full class of admissible frameworks, and it does not justify that a
+fragment's commitments are referential.
+It turns an unexamined assumption into a precise obligation: to show that the
+frameworks in a deployed class are neutral on the vocabulary, or to say which
+are not.
+
+
+% =============================================================================
+\section*{Statements and Declarations}
+% =============================================================================
+
+\subsection*{Acknowledgments} The author thanks the anonymous reviewers
+of an earlier version of this work for comments that helped improve
+the framing, organization, and presentation of the work.
+
+\subsection*{Author Contributions}
+The author is the sole contributor to this work and
+is responsible for all aspects of the research, authorship, and publication.
+
+\subsection*{Use of AI-Assisted Tools}
+AI-assisted tools were used for editing, formatting, and consistency checking.
+The author reviewed all suggestions and is solely responsible for the content.
+
+\subsection*{Declaration of Conflicting Interest}
+The author declares no potential conflicts of interest.
+
+\begin{thebibliography}{99}
+
+  \bibitem[Case(2026)]{case2026neutral}
+  Case, D.~M. (2026).
+  Neutral substrates: A design constraint for shared records under persistent
+  interpretive disagreement.
+  Preprint, arXiv:2601.14271.
+
+  \bibitem[Craig(1957)]{craig1957}
+  Craig, W. (1957).
+  Three uses of the Herbrand--Gentzen theorem in relating model theory and
+  proof theory.
+  \emph{The Journal of Symbolic Logic}, 22(3):269--285.
+
+  \bibitem[Cuenca~Grau et~al.(2008)]{cuencagrau2008modular}
+  Cuenca~Grau, B., Horrocks, I., Kazakov, Y., and Sattler, U. (2008).
+  Modular reuse of ontologies: Theory and practice.
+  \emph{Journal of Artificial Intelligence Research}, 31:273--318.
+
+  \bibitem[Robinson(1956)]{robinson1956}
+  Robinson, A. (1956).
+  A result on consistency and its application to the theory of definition.
+  \emph{Koninklijke Nederlandse Akademie van Wetenschappen, Proceedings,
+    Series A}, 59:47--58; also \emph{Indagationes Mathematicae}, 18:47--58.
+
+\end{thebibliography}
+
+\end{document}

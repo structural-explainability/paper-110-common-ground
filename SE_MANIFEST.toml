@@ -1,0 +1,94 @@
+# ============================================================
+# SE_MANIFEST.toml (Repository Declaration)
+# ============================================================
+
+schema = "se-manifest-schema"
+schema_version = "0.5.0"
+schema_url = "https://raw.githubusercontent.com/structural-explainability/se-manifest-schema/main/manifest-schema.toml"
+
+# === Framework Context ===
+
+[meta]
+framework = "Structural Explainability"
+framework_url = "https://github.com/structural-explainability"
+purpose = "Declares this repository's role in the Structural Explainability ecosystem."
+
+# === Repository Identity ===
+
+[repository]
+organization = "structural-explainability"
+name = "paper-110-common-ground"
+class = "paper"
+kind = "paper"
+status = "draft"
+since = "2026"
+summary = "Paper defining neutral substrates as shared representational layers that provide stable reference while avoiding object-level substrate-layer commitments to causal or normative propositions under persistent interpretive disagreement."
+
+# === Layer Position ===
+
+[layer]
+space = "structural-explainability"
+role = "justification-neutrality"
+
+# === Dependency Declarations ===
+
+[depends]
+required = []
+optional = []
+
+# === Provided Artifacts ===
+
+[provides]
+artifacts = [
+    "ANNOTATIONS.md",
+    "CITATION.cff",
+    "LICENSE",
+    "README.md",
+    "SE_MANIFEST.toml",
+    "se110-common-ground.tex",
+]
+
+# === Scope ===
+
+[scope]
+includes = [
+    "attribution propositions",
+    "boundary condition for contested reference or attributional basis",
+    "checkable substrate-layer constraint",
+    "contestability of causal or normative propositions",
+    "definition of neutral substrates",
+    "design-time guarantee for neutrality",
+    "extension stability",
+    "framework-compatible commitment sets",
+    "interpretive non-commitment",
+    "neutrality by design",
+    "permitted attribution propositions",
+    "permitted foundational-layer commitments",
+    "prohibition of object-level causal or normative commitments",
+    "referential commitments",
+    "referential common ground",
+    "reification of interpretive claims",
+    "substrate-layer commitments",
+    "worked example of attributed causal and normative claims",
+]
+
+excludes = [
+    "adjudication among admissible frameworks",
+    "data format specification",
+    "domain ontology design",
+    "general theory of accountability",
+    "identity-regime derivations",
+    "implementation requirements",
+    "normative specification text",
+]
+
+# === Citation ===
+
+[citation]
+cff = "CITATION.cff"
+preferred = "paper"
+
+# === Traceability ===
+
+[traceability]
+identifier_map = "none"
