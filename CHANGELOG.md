@@ -18,11 +18,9 @@ the absence of demonstrated framework variance
 nor membership in the undetermined middle
 establishes foundational permissibility.
 
-Fixes (after football): Paper 110's metadata still identifies Paper 100.
-Its README title, overview, arXiv badge, DOI, and main contribution are copied from Neutral Substrates.
-CITATION.cff also identifies the Paper 100 title and DOI,
-while SE_MANIFEST.toml still describes Paper 100's neutrality result.
-The changelog even instructs replacing arXiv submission 2601.14271.
+### Fixed
+
+Paper 110's metadata, CITATION.cff, and SE_MANIFEST.toml.
 
 ---
 
@@ -34,12 +32,19 @@ The changelog even instructs replacing arXiv submission 2601.14271.
 
 ## Notes on versioning and releases
 
-- We use **SemVer**:
-  - **MAJOR** - breaking changes to the meaning, assumptions, or conclusions
-    of existing paper items, or removal or renaming of their identifiers
-  - **MINOR** - backward-compatible additions
-  - **PATCH** - fixes, documentation, tooling
-- Versions are driven by git tags. Tag `vX.Y.Z` to release.
+We use SemVer for repository releases:
+
+- **MAJOR** - Breaking changes to the meaning, assumptions,
+  or conclusions of existing paper items, or removal or
+  renaming of their identifiers.
+- **MINOR** - Backward-compatible additions.
+- **PATCH** - Corrections, documentation, and tooling updates.
+
+Versions are driven by git tags.
+Tag `vX.Y.Z` to release.
+
+The Git repository version and the arXiv manuscript version
+are separate version histories.
 
 ## Release Procedure (Required)
 
@@ -48,7 +53,7 @@ Follow these steps exactly when creating a new release.
 ### Task 1. Update release metadata (manual edits)
 
 1.1. CITATION.cff: update version and date-released
-1.2. CHANGELOG.md: add section, move unreleased entries, update links, update release command
+1.2. CHANGELOG.md: add section, move unreleased entries, update links
 
 ### Task 2. Set up and Validate
 
@@ -91,7 +96,7 @@ Verify that all required GitHub Actions complete successfully.
 
 1. As Needed: Run the **Prepare arXiv Source** workflow manually.
 2. As Needed: Download `arxiv-source.zip` and the compiled PDF artifact; check the PDF.
-3. Replace the existing arXiv submission (2601.14271) with the new source.
+3. Replace the existing arXiv submission with the new source.
 4. Update the arXiv abstract field to match the paper's abstract.
 5. Summarize the change in the arXiv Comments field.
 
@@ -104,12 +109,6 @@ After the required GitHub Actions succeed:
 ```shell
 git tag vX.Y.Z -m "X.Y.Z"
 git push origin vX.Y.Z
-```
-
-After it succeeds, for a major revision, create a release:
-
-```shell
-gh release create v0.1.0 --verify-tag --title "v0.1.0" --generate-notes
 ```
 
 ## Only As Needed (delete a tag)

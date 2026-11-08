@@ -22,7 +22,7 @@ class = "paper"
 kind = "paper"
 status = "draft"
 since = "2026"
-summary = "Paper defining neutral substrates as shared representational layers that provide stable reference while avoiding object-level substrate-layer commitments to causal or normative propositions under persistent interpretive disagreement."
+summary = "Paper characterizing fragment-relative Referential Common Ground in classical propositional logic, including the insufficiency of admissibility alone and the conditions under which frameworks are neutral on a vocabulary."
 
 # === Layer Position ===
 
@@ -52,34 +52,29 @@ artifacts = [
 
 [scope]
 includes = [
-    "attribution propositions",
-    "boundary condition for contested reference or attributional basis",
-    "checkable substrate-layer constraint",
-    "contestability of causal or normative propositions",
-    "definition of neutral substrates",
-    "design-time guarantee for neutrality",
-    "extension stability",
-    "framework-compatible commitment sets",
-    "interpretive non-commitment",
-    "neutrality by design",
-    "permitted attribution propositions",
-    "permitted foundational-layer commitments",
-    "prohibition of object-level causal or normative commitments",
-    "referential commitments",
-    "referential common ground",
-    "reification of interpretive claims",
-    "substrate-layer commitments",
-    "worked example of attributed causal and normative claims",
+    "classical propositional logic and satisfiability",
+    "bounded satisfiable nontrivial referential fragments",
+    "joint consistency over disjoint vocabularies",
+    "framework valuation-permission interfaces",
+    "compatibility of fragment theories with frameworks",
+    "framework neutrality on a vocabulary",
+    "characterization of vocabulary neutrality by compatibility with every satisfiable theory over that vocabulary",
+    "neutrality and conflict dichotomy",
+    "independence of common ground from admissibility alone",
+    "fragment-relative common ground under stated scope conditions",
+    "machine-checked Lean results",
+    "worked decision-record example",
 ]
 
 excludes = [
-    "adjudication among admissible frameworks",
-    "data format specification",
-    "domain ontology design",
-    "general theory of accountability",
-    "identity-regime derivations",
-    "implementation requirements",
-    "normative specification text",
+    "proof of global Referential Common Ground for all admissible frameworks",
+    "independent justification that a particular fragment is genuinely referential",
+    "first-order logic with equality",
+    "identity-bearing fragments",
+    "definition of Neutral Substrate design constraints and attribution semantics",
+    "independent validation of concrete information systems",
+    "adjudication among competing interpretations",
+    "runtime implementations and data format specifications",
 ]
 
 # === Citation ===

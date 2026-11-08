@@ -1,67 +1,112 @@
-# Neutral Substrates
-
-<!-- CUSTOM: arXiv badge is static by design to avoid Shields/arXiv API lag and cache failures -->
+# Referential Common Ground
 
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC_BY_4.0-blue.svg)](https://creativecommons.org/licenses/by/4.0/)
-[![arXiv](https://img.shields.io/badge/arXiv-2601.14271-b31b1b.svg)](https://arxiv.org/abs/2601.14271)
 
 [![Build PDF](https://github.com/structural-explainability/paper-110-common-ground/actions/workflows/build-latex.yml/badge.svg?branch=main)](https://github.com/structural-explainability/paper-110-common-ground/actions/workflows/build-latex.yml)
 [![Check Links](https://github.com/structural-explainability/paper-110-common-ground/actions/workflows/links.yml/badge.svg?branch=main)](https://github.com/structural-explainability/paper-110-common-ground/actions/workflows/links.yml)
 
 [![ArXiv Prep](https://github.com/structural-explainability/paper-110-common-ground/actions/workflows/arxiv-prep.yml/badge.svg?branch=main)](https://github.com/structural-explainability/paper-110-common-ground/actions/workflows/arxiv-prep.yml)
-[![DOI](https://img.shields.io/badge/DOI-10.48550/arXiv.2601.14271-blue)](https://doi.org/10.48550/arXiv.2601.14271)
 
-> Defines neutral substrates that preserve shared reference
-> without adopting contested interpretations.
+> Characterizes conditions under which a bounded referential fragment
+> remains compatible with interpretive frameworks,
+> without requiring agreement on contested interpretations.
 
 ## Paper Overview
 
-Neutral Substrates: A Design Constraint for Shared Records
-Under Persistent Interpretive Disagreement
+**Referential Common Ground**: Conditions for Compatibility
+Between a Bounded Referential Fragment and Interpretive Frameworks
 
-- [arXiv](https://arxiv.org/abs/2601.14271)
-- [SciX](https://scixplorer.org/abs/2026arXiv260114271C/abstract)
+This paper investigates the Referential Common Ground assumption
+underlying the Neutral Substrate design constraint.
+
+It establishes conditions under which a satisfiable referential
+fragment is compatible with a declared class of interpretive frameworks.
+
+The results are developed in classical propositional logic
+and checked in Lean 4.
 
 ## Main Contribution
 
-This paper addresses a practical problem in shared records
-where parties persistently disagree about interpretation.
+The Neutral Substrate result establishes a sufficient condition
+for semantic neutrality of a shared foundational layer,
+provided its referential commitments are compatible
+with every admissible interpretive framework.
 
-Simply omitting contested information can undermine accountability,
-because records should preserve what parties claim
-along with the provenance of those claims.
-But adopting one contested interpretation as the shared foundation
-can compromise neutrality.
+Referential Common Ground is an assumption of that result.
+This paper investigates when the assumption can be justified.
 
-The paper establishes a sufficient condition for semantic neutrality.
-If the shared referential commitments, taken as a whole,
-are compatible with every admissible framework,
-then limiting the foundation to those commitments
-and to attribution statements grounded in them
-is enough to preserve neutrality.
+The paper establishes that admissibility alone does not guarantee
+nontrivial common ground.
+When admissibility imposes no restrictions beyond consistency,
+only commitment sets satisfied by every valuation
+are compatible with every admissible framework.
 
-Contested causal and normative claims can still be represented
-as attributed assertions tied to an identified framework,
-source, agent, or record.
-The shared system records who asserted what, with provenance,
-without endorsing the asserted claim.
+A stronger condition must therefore constrain frameworks.
 
-Guaranteeing neutrality by design requires additional justification.
-The paper establishes one sufficient approach to semantic neutrality,
-not the only possible way to build a neutral system.
+The paper defines a framework as neutral on a vocabulary
+when it permits every valuation of that vocabulary.
+
+It establishes that:
+
+- Compatibility with a theory over a vocabulary depends
+  on the valuations that a framework permits on that vocabulary.
+- A framework neutral on a vocabulary is compatible
+  with every satisfiable theory over that vocabulary.
+- Conversely, compatibility with every satisfiable theory
+  over a vocabulary characterizes neutrality on that vocabulary.
+- Every framework is either neutral on the vocabulary
+  or conflicts with some satisfiable theory over it.
+- A satisfiable framework whose propositions use only atoms
+  outside the vocabulary is neutral on that vocabulary.
+
+These results characterize a class of frameworks
+without defining membership through agreement
+with a particular referential fragment.
+
+The mathematical ingredients are classical.
+The contribution is their formulation as explicit conditions
+for fragment-relative Referential Common Ground
+in the Neutral Substrate setting.
 
 ## Scope
 
-The result does not apply when the shared referential information,
-or the basis for attributing claims to sources,
-conflicts with an admissible framework.
-Disagreement about interpretation alone does not trigger this.
+The results are conditional on the stated logical setting,
+referential fragment, and framework class.
+
+The formal development uses classical propositional logic.
+Referential fragments are satisfiable, nontrivial,
+and bounded by a finite vocabulary.
+
+The results do not establish:
+
+- Referential Common Ground for the full class
+  of admissible interpretive frameworks.
+- That a particular fragment's commitments
+  are genuinely referential.
+- Compatibility for frameworks that do not satisfy
+  the relevant vocabulary-neutrality condition.
+- Corresponding results for first-order logic with equality
+  or identity-bearing fragments.
+- The scientific adequacy of a particular
+  information-system realization.
+
+A concrete realization must independently justify
+its referential commitments and the applicable framework class.
 
 ## Basis
 
 - [Lean basis summary](se110-lean-basis.md)
-- Lean 4 formalization:
+- Common Ground Lean 4 formalization:
+  [se-theory-common-ground](https://github.com/structural-explainability/se-theory-common-ground)
+- Upstream Neutral Substrate formalization:
   [se-theory-neutral-substrate](https://github.com/structural-explainability/se-theory-neutral-substrate)
+
+The Common Ground formalization provides the concrete
+propositional instance, vocabulary-interface results,
+scope characterization, and independence results.
+
+The Neutral Substrate theory supplies the abstract
+consequence and framework systems on which this work builds.
 
 ## Building Locally
 
@@ -131,9 +176,13 @@ uvx se-manifest-schema validate-manifest --strict
 
 ## Related and Adjacent Work
 
-Selected papers from the
-[Harvard SciX similar-papers search](https://ui.adsabs.harvard.edu/abs/2026arXiv260114271C/similar)
-for _Common Ground_.
+The mathematical context includes Robinson's joint consistency
+theorem, Craig interpolation, and conservative extensions
+in ontology modularity.
+
+The paper distinguishes these established logical results
+from its formulation of fragment-relative
+Referential Common Ground.
 
 ## Annotations
 
