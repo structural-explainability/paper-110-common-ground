@@ -83,8 +83,9 @@ The results do not establish:
   of admissible interpretive frameworks.
 - That a particular fragment's commitments
   are genuinely referential.
-- Compatibility for frameworks that do not satisfy
-  the relevant vocabulary-neutrality condition.
+- Uniform compatibility with every satisfiable theory
+  over a vocabulary for frameworks that are not neutral on it.
+  Such frameworks may still be compatible with particular fragments.
 - Corresponding results for first-order logic with equality
   or identity-bearing fragments.
 - The scientific adequacy of a particular

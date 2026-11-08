@@ -89,9 +89,9 @@ Verify that all required GitHub Actions complete successfully.
 
 1. As Needed: Run the **Prepare arXiv Source** workflow manually.
 2. As Needed: Download `arxiv-source.zip` and the compiled PDF artifact; check the PDF.
-3. Replace the existing arXiv submission with the new source.
-4. Update the arXiv abstract field to match the paper's abstract.
-5. Summarize the change in the arXiv Comments field.
+3. Submit as new or replace existing arXiv submission with the new source.
+4. Set/update the arXiv abstract field to match the paper's abstract.
+5. Add num pages (and summarize the change if updated) in the arXiv Comments field.
 
 Verify the updated arxiv step BEFORE tagging.
 
@@ -107,8 +107,8 @@ git push origin vX.Y.Z
 ## Only As Needed (delete a tag)
 
 ```shell
-git tag -d vX.Z.Y
-git push origin :refs/tags/vX.Z.Y
+git tag -d vX.Y.Z
+git push origin :refs/tags/vX.Y.Z
 ```
 
 ## Links

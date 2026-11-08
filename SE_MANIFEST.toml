@@ -40,7 +40,7 @@ optional = []
 
 [provides]
 artifacts = [
-    "ANNOTATIONS.md",
+    ".annotations/annotations.md",
     "CITATION.cff",
     "LICENSE",
     "README.md",
