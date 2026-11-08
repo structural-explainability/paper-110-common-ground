@@ -11,13 +11,6 @@ and this project adheres to **[Semantic Versioning](https://semver.org/spec/v2.0
 
 ## [Unreleased]
 
-### Planned
-
-Contestability Clarification - explain why neither
-the absence of demonstrated framework variance
-nor membership in the undetermined middle
-establishes foundational permissibility.
-
 ### Fixed
 
 Paper 110's metadata, CITATION.cff, and SE_MANIFEST.toml.
